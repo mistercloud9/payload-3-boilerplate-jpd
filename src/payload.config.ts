@@ -21,7 +21,11 @@ import { getServerSideURL } from './utilities/getURL'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const frontendURL = process.env.NEXT_PUBLIC_SERVER_URL || getServerSideURL()
+const allowedOrigins = [
+  'https://jurisprudenciaaldia.ai.studio',
+  getServerSideURL(),
+  process.env.NEXT_PUBLIC_SERVER_URL,
+].filter(Boolean)
 
 export default buildConfig({
   admin: {
@@ -68,8 +72,8 @@ export default buildConfig({
     },
   }),
   collections: [Pages, Posts, Media, Categories, Users, Comments],
-  cors: [getServerSideURL(), frontendURL].filter(Boolean),
-  csrf: [getServerSideURL(), frontendURL].filter(Boolean),
+  cors: allowedOrigins,
+  csrf: allowedOrigins,
   globals: [Header, Footer],
   plugins: [
     ...plugins,
