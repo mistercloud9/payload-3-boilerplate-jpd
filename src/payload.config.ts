@@ -21,6 +21,8 @@ import { getServerSideURL } from './utilities/getURL'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const frontendURL = process.env.NEXT_PUBLIC_SERVER_URL || getServerSideURL()
+
 export default buildConfig({
   admin: {
     components: {
@@ -66,7 +68,8 @@ export default buildConfig({
     },
   }),
   collections: [Pages, Posts, Media, Categories, Users, Comments],
-  cors: [getServerSideURL()].filter(Boolean),
+  cors: [getServerSideURL(), frontendURL].filter(Boolean),
+  csrf: [getServerSideURL(), frontendURL].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
     ...plugins,
@@ -87,3 +90,4 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
 })
+
