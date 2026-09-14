@@ -9,7 +9,11 @@ import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 
 export async function Footer() {
-  const footer: Footer = await getCachedGlobal('footer', 1)()
+  const footer = await getCachedGlobal('footer', 1)()
+
+  if (!footer) {
+    return null
+  }
 
   const navItems = footer?.navItems || []
 
@@ -32,3 +36,4 @@ export async function Footer() {
     </footer>
   )
 }
+
