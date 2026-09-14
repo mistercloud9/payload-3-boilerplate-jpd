@@ -26,7 +26,6 @@ const nextConfig = {
   },
   reactStrictMode: true,
   redirects,
-  staticGenerationTimeout: 0,
 }
 
 export default withPayload(nextConfig)
